@@ -504,6 +504,10 @@ CODEGENOPT(OpaquePointers, 1, 0)
 /// non-deleting destructors. (No effect on Microsoft ABI.)
 CODEGENOPT(CtorDtorReturnThis, 1, 0)
 
+
+CODEGENOPT(LinearizeCFG  , 1, 0) ///< Control whether control flow is linearized.
+
+
 #undef CODEGENOPT
 #undef ENUM_CODEGENOPT
 #undef VALUE_CODEGENOPT

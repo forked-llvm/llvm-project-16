@@ -1420,6 +1420,9 @@ void CompilerInvocation::GenerateCodeGenArgs(
   else if (!Opts.UnrollLoops && Opts.OptimizationLevel > 1)
     GenerateArg(Args, OPT_fno_unroll_loops, SA);
 
+  if (Opts.LinearizeCFG)
+    GenerateArg(Args, OPT_flinearize_cfg, SA);
+
   if (!Opts.BinutilsVersion.empty())
     GenerateArg(Args, OPT_fbinutils_version_EQ, Opts.BinutilsVersion, SA);
 
@@ -1704,6 +1707,9 @@ bool CompilerInvocation::ParseCodeGenArgs(CodeGenOptions &Opts, ArgList &Args,
   Opts.UnrollLoops =
       Args.hasFlag(OPT_funroll_loops, OPT_fno_unroll_loops,
                    (Opts.OptimizationLevel > 1));
+  // Control Flow Linearization
+  Opts.LinearizeCFG =
+      Args.hasFlag(OPT_flinearize_cfg, OPT_fno_linearize_cfg, false);
   Opts.BinutilsVersion =
       std::string(Args.getLastArgValue(OPT_fbinutils_version_EQ));
 

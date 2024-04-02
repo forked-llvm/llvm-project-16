@@ -88,6 +88,7 @@
 #include "llvm/Transforms/Scalar/InstSimplifyPass.h"
 #include "llvm/Transforms/Scalar/JumpThreading.h"
 #include "llvm/Transforms/Scalar/LICM.h"
+#include "llvm/Transforms/Scalar/Linearize.h"
 #include "llvm/Transforms/Scalar/LoopDeletion.h"
 #include "llvm/Transforms/Scalar/LoopDistribute.h"
 #include "llvm/Transforms/Scalar/LoopFlatten.h"
@@ -291,6 +292,7 @@ PipelineTuningOptions::PipelineTuningOptions() {
   MergeFunctions = EnableMergeFunctions;
   InlinerThreshold = -1;
   EagerlyInvalidateAnalyses = EnableEagerlyInvalidateAnalyses;
+  LinearizeCFG = false;
 }
 
 namespace llvm {
@@ -1354,8 +1356,13 @@ PassBuilder::buildModuleOptimizationPipeline(OptimizationLevel Level,
   MPM.addPass(createModuleToFunctionPassAdaptor(std::move(OptimizePM),
                                                 PTO.EagerlyInvalidateAnalyses));
 
+
   for (auto &C : OptimizerLastEPCallbacks)
     C(MPM, Level);
+
+  // add cfg linearization pass
+  if (PTO.LinearizeCFG)
+    MPM.addPass(LinearizePass());
 
   // Split out cold code. Splitting is done late to avoid hiding context from
   // other optimizations and inadvertently regressing performance. The tradeoff
@@ -1958,6 +1965,10 @@ ModulePassManager PassBuilder::buildO0DefaultPipeline(OptimizationLevel Level,
 
   for (auto &C : OptimizerLastEPCallbacks)
     C(MPM, Level);
+
+  // add cfg linearization pass
+  if (PTO.LinearizeCFG)
+    MPM.addPass(LinearizePass());
 
   if (LTOPreLink)
     addRequiredLTOPreLinkPasses(MPM);

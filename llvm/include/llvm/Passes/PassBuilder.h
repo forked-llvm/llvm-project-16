@@ -85,6 +85,9 @@ public:
   // analyses after various module->function or cgscc->function adaptors in the
   // default pipelines.
   bool EagerlyInvalidateAnalyses;
+
+  // CFG linearization
+  bool LinearizeCFG;
 };
 
 /// This class provides access to building LLVM's passes.

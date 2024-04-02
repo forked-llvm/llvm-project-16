@@ -2986,6 +2986,12 @@ def ffinite_loops: Flag<["-"],  "ffinite-loops">, Group<f_Group>,
 def fno_finite_loops: Flag<["-"], "fno-finite-loops">, Group<f_Group>,
   HelpText<"Do not assume that any loop is finite.">, Flags<[CC1Option]>;
 
+// Control Flow Linearization
+def flinearize_cfg : Flag<["-"], "flinearize-cfg">, Group<f_Group>,
+  HelpText<"Turn on control flow linearizeation">, Flags<[CC1Option]>;
+def fno_linearize_cfg : Flag<["-"], "fno-linearize-cfg">, Group<f_Group>,
+  HelpText<"Turn off control flow linearizeation">, Flags<[CC1Option]>;
+
 def ftrigraphs : Flag<["-"], "ftrigraphs">, Group<f_Group>,
   HelpText<"Process trigraph sequences">, Flags<[CC1Option]>;
 def fno_trigraphs : Flag<["-"], "fno-trigraphs">, Group<f_Group>,

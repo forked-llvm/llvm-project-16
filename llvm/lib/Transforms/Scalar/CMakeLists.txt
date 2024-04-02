@@ -79,6 +79,8 @@ add_llvm_component_library(LLVMScalarOpts
   TLSVariableHoist.cpp
   WarnMissedTransforms.cpp
 
+  Linearize.cpp
+
   ADDITIONAL_HEADER_DIRS
   ${LLVM_MAIN_INCLUDE_DIR}/llvm/Transforms
   ${LLVM_MAIN_INCLUDE_DIR}/llvm/Transforms/Scalar

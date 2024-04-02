@@ -831,6 +831,7 @@ void EmitAssemblyHelper::RunOptimizationPipeline(
   // Only enable CGProfilePass when using integrated assembler, since
   // non-integrated assemblers don't recognize .cgprofile section.
   PTO.CallGraphProfile = !CodeGenOpts.DisableIntegratedAS;
+  PTO.LinearizeCFG = CodeGenOpts.LinearizeCFG;
 
   LoopAnalysisManager LAM;
   FunctionAnalysisManager FAM;

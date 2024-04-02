@@ -543,6 +543,8 @@ FunctionPass *createInstSimplifyLegacyPass();
 // and scatter intrinsics with scalar code when target doesn't support them.
 //
 FunctionPass *createScalarizeMaskedMemIntrinLegacyPass();
+
+ModulePass *createLinearizePass();
 } // End llvm namespace
 
 #endif
